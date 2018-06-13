@@ -13,7 +13,7 @@
                 },
                 "from": {
                     "kind": "DockerImage",
-                    "name": "openshiftkatacoda/simple-http-server:latest"
+                    "name": "mcn015/simple-http-server:latest"
                 }
             }
         ]
