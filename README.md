@@ -88,3 +88,32 @@ oc create -f https://raw.githubusercontent.com/openshift-katacoda/simple-http-se
 Alternatively visit the URL for the raw imagestream JSON file and cut and paste the contents in to the "Import YAML/JSON" page of the web console under "Add to project".
 
 The S2I builder should then be able to be found by searching for "simple-http-server" in the catalog. In addition to being able to select it from the catalog, an application can still be created using ``oc new-app`` as shown above.
+
+------------------------------------------------------------------------------
+
+UPDATE:
+
+ First check images in Docker. Execute from local dir
+
+docker build -t simple-http-server .
+docker run -ti -p 8080:8080 --rm --name tmp --entrypoint /bin/bash simple-http-server
+
+s2i build . simple-http-server static-web-site
+docker run -ti -p 8080:8080 --rm --name tmp --entrypoint /bin/bash static-web-site
+
+
+--------- Build in OpenShift -------------
+login ass admin
+oc login -u system:admin
+oc project openshift
+
+build template and edit image stream
+oc new-build --name simple-http-server --strategy=docker --code https://github.com/mcn015/simple-http-server
+oc create -f https://raw.githubusercontent.com/mcn015/simple-http-server/master/imagestream.json
+    or
+oc edit is/simple-http-server -o json
+
+ create new application
+ login as your user in your project
+
+oc new-app simple-http-server~https://github.com/mcn015/static-web-site
