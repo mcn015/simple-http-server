@@ -115,11 +115,12 @@ build template and edit image stream
 oc new-build --name simple-http-server --strategy=docker --code https://github.com/mcn015/simple-http-server
 ```
 
-```oc create -f https://raw.githubusercontent.com/mcn015/simple-http-server/master/imagestream.json
+```
+oc create -f https://raw.githubusercontent.com/mcn015/simple-http-server/master/imagestream.json
 ```
     or
-    
-```oc edit is/simple-http-server -o json
+```
+oc edit is/simple-http-server -o json
 ```
  Create new application.
  Login as your user in your project.
