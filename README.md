@@ -95,25 +95,33 @@ UPDATE:
 
  First check images in Docker. Execute from local dir
 
-docker build -t simple-http-server .
+```docker build -t simple-http-server .
 docker run -ti -p 8080:8080 --rm --name tmp --entrypoint /bin/bash simple-http-server
-
+```
+```
 s2i build . simple-http-server static-web-site
 docker run -ti -p 8080:8080 --rm --name tmp --entrypoint /bin/bash static-web-site
-
+```
 
 --------- Build in OpenShift -------------
-login ass admin
+login as admin
+```
 oc login -u system:admin
 oc project openshift
-
+```
 build template and edit image stream
+```
 oc new-build --name simple-http-server --strategy=docker --code https://github.com/mcn015/simple-http-server
-oc create -f https://raw.githubusercontent.com/mcn015/simple-http-server/master/imagestream.json
-    or
-oc edit is/simple-http-server -o json
+```
 
+```oc create -f https://raw.githubusercontent.com/mcn015/simple-http-server/master/imagestream.json
+```
+    or
+```oc edit is/simple-http-server -o json
+```
  create new application
  login as your user in your project
 
+```
 oc new-app simple-http-server~https://github.com/mcn015/static-web-site
+```
